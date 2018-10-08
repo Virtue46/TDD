@@ -2,6 +2,7 @@ package parking;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TwoParkingTest {
@@ -16,9 +17,6 @@ public class TwoParkingTest {
         parkingBoy.park(new Car());
         assertEquals(parking1.isFull(),true);
         assertEquals(parking2.isFull(),false);
-
-
-
     }
 
 
@@ -66,7 +64,9 @@ public class TwoParkingTest {
         ParkingBoy parkingBoy = new ParkingBoy(parking1,parking2);
         // when
         Ticket ticket = parkingBoy.park(new Car());
-        parkingBoy.pickup(ticket);
+        Car car = parkingBoy.pickup(ticket);
+        //then
+        assertNotNull(car);
 
     }
 }
