@@ -83,8 +83,8 @@ public class ParkingManager {
         }
 
         String tempReturn = returnStr.toString();
-        String tempManage = String.format("%s %s %s %s","M",totalParkingCount,totalCapacity,System.lineSeparator());
-        return String.format("%s %s",tempManage,tempReturn);
+        String tempManage = String.format("%s %s %s %s","M",totalParkingCount,totalCapacity,"\n");
+        return String.format("%s %s",tempManage,tempReturn).toString();
 
     }
 

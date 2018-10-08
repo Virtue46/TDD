@@ -18,7 +18,12 @@ public class ParkingBoy {
 
     public Ticket park(Car car) {
         Optional<Parking> findFirst = parkingList.stream().filter(parking -> !parking.isFull()).findFirst();
-        Parking firstParking = findFirst.get();
+        Parking firstParking = null;
+        if(findFirst.isPresent()) {
+            firstParking = findFirst.get();
+        }else{
+            throw new IndexOutOfBoundsException("所有停车厂已满！");
+        }
         return firstParking.park(car);
     }
 

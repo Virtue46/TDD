@@ -1,5 +1,6 @@
 package parking;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,6 +51,10 @@ public class Parking {
     }
 
     public String formatOutPut() {
-        return String.format("%s %s %s %s", "P", this.getParkingCount(), this.getCapacity(),System.lineSeparator());
+        return String.format("%s %s %s %s", "P", this.getParkingCount(), this.getCapacity(), "\n").toString();
+    }
+
+    public Double calculateVacancyRate() {
+        return (capacity - ticketMap.size()) * 1.0 / capacity;
     }
 }
