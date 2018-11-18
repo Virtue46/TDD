@@ -30,10 +30,12 @@ repositories {
     // Use jcenter for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
     mavenLocal()
-    jcenter()
-    maven { url 'http://repo.spring.io/plugins-release' }
-    maven { url 'http://repo.spring.io/milestone' }
-    maven { url "https://plugins.gradle.org/m2/" }
+//    jcenter()
+    maven { url 'http://10.135.100.243:8081/nexus/content/groups/public/' }
+
+//    maven { url 'http://repo.spring.io/plugins-release' }
+//    maven { url 'http://repo.spring.io/milestone' }
+//    maven { url "https://plugins.gradle.org/m2/" }
 }
 
 dependencies {

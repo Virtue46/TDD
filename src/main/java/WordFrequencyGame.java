@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by jxzhong on 2018/5/22.
@@ -6,57 +7,54 @@ import java.util.*;
 public class WordFrequencyGame {
     public String getResult(String inputStr) {
 
-        if (inputStr.split("\\s+").length == 1) {
-            return inputStr + " 1";
-        } else {
+        String[] split = inputStr.split("\\s+");
 
-            try {
 
-                //split the input string with 1 to n pieces of spaces
-                String[] arr = inputStr.split("\\s+");
+        try {
 
-                List<Input> inputList = new ArrayList<>();
-                for (String s : arr) {
-                    Input input = new Input(s, 1);
-                    inputList.add(input);
-                }
+            List<Input> inputList = initInputWord(split);
 
-                //get the map for the next step of sizing the same word
-                Map<String, List<Input>> map = getListMap(inputList);
+            inputList = countWordsFrequency(inputList);
 
-                List<Input> list = new ArrayList<>();
-                for (Map.Entry<String, List<Input>> entry : map.entrySet()) {
-                    Input input = new Input(entry.getKey(), entry.getValue().size());
-                    list.add(input);
-                }
-                inputList = list;
+            inputList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
 
-                inputList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
+            StringJoiner joiner = formatWords(inputList);
 
-                StringJoiner joiner = new StringJoiner("\n");
-                for (Input w : inputList) {
-                    String s = w.getValue() + " " + w.getWordCount();
-                    joiner.add(s);
-                }
-                return joiner.toString();
-            } catch (Exception e) {
-                return "Calculate Error";
-            }
+
+            return joiner.toString();
+        } catch (Exception e) {
+            return "Calculate Error";
         }
     }
 
-    private Map<String, List<Input>> getListMap(List<Input> inputList) {
-        Map<String, List<Input>> map = new HashMap<>();
-        for (Input input : inputList) {
-//       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
-            if (!map.containsKey(input.getValue())) {
-                ArrayList arr = new ArrayList<>();
-                arr.add(input);
-                map.put(input.getValue(), arr);
-            } else {
-                map.get(input.getValue()).add(input);
-            }
+    private StringJoiner formatWords(List<Input> inputList) {
+    StringJoiner joiner = new StringJoiner("\n");
+        for (Input w : inputList) {
+            String s = w.getValue() + " " + w.getWordCount();
+            joiner.add(s);
         }
-        return map;
+//        inputList.stream().map(word -> String.format("%s %d"),word.getValue(),word.getWordCount()).collect(joiniong);
+        return joiner;
     }
+
+    private List<Input> countWordsFrequency(List<Input> inputList) {
+        Map<String, List<Input>> map1 = new HashMap<>();
+        for (Input input1 : inputList) {
+            map1.computeIfAbsent(input1.getValue(), k -> new ArrayList<>()).add(input1);
+        }
+
+
+        inputList = map1.entrySet().stream().map(entry -> new Input(entry.getKey(), entry.getValue().size())).collect(Collectors.toList());
+        return inputList;
+    }
+
+    private List<Input> initInputWord(String[] arr) {
+        List<Input> inputList = new ArrayList<>();
+        for (String s : arr) {
+            Input input = new Input(s, 1);
+            inputList.add(input);
+        }
+        return inputList;
+    }
+
 }

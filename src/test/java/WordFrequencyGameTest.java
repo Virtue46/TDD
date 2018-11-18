@@ -65,4 +65,7 @@ public class WordFrequencyGameTest {
         //Then
         assertThat(result, is(expectResult));
     }
+
+
+
 }
